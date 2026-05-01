@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.config.server.EnableConfigServer;
 
+/**
+ * Centralized configuration server for the microservice suite.
+ */
 @EnableDiscoveryClient
 @SpringBootApplication
 @EnableConfigServer

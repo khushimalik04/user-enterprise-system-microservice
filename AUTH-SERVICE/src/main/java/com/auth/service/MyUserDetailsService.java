@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+/**
+ * Bridges the application's user table to Spring Security's authentication flow.
+ */
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired

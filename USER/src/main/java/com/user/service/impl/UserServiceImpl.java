@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Handles persistence for users and enriches responses with address-service data when available.
+ */
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -90,6 +93,7 @@ public class UserServiceImpl implements UserService {
         List<AddressDto> addresses = new ArrayList<>();
         UserDto dto =  modelMapper.map(user, UserDto.class);
         try{
+            // Address data is optional from the perspective of the user response.
             addresses = addressClient.getAddressByUserId(user.getId());
             dto.setAddress(addresses);
         }catch(Exception e){
@@ -109,6 +113,7 @@ public class UserServiceImpl implements UserService {
         for(UserDto user : userDtoList){
             List<AddressDto> addresses = new ArrayList<>();
             try{
+                // Each user is enriched independently so one address failure does not break the whole list.
                 addresses = addressClient.getAddressByUserId(user.getId());
                 user.setAddress(addresses);
             }catch(Exception e){

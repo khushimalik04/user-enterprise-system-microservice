@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+/**
+ * Feign client used by the user service to fetch address records from the address service.
+ */
 @FeignClient(name = "ADDRESS")
 public interface AddressClient {
 

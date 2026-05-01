@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * CRUD endpoints for user records plus a filtered lookup by business keys.
+ */
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -64,6 +67,7 @@ public class UserController {
             missingParameters.add("companyName");
         }
         if(!missingParameters.isEmpty()){
+            // Report every missing query parameter in one response instead of failing one-by-one.
             String finalMessage = missingParameters.stream().collect(Collectors.joining(","));
             throw new MissingParameterException("Please provide " + finalMessage);
         }

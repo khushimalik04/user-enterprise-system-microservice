@@ -3,6 +3,9 @@ package com.auth.exception;
 
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * Placeholder for auth-specific exception mapping when this service needs custom responses.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler  {
 

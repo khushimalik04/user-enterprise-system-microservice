@@ -4,6 +4,9 @@ package com.address.model.entity;
 import com.address.model.enums.AddressType;
 import jakarta.persistence.*;
 
+/**
+ * Address entity stored independently and linked to a user by id.
+ */
 @Entity
 public class Address {
 
@@ -16,6 +19,7 @@ public class Address {
     private String city;
     private String country;
 
+    // Stored as text so enum values stay readable in the database and payloads.
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
 

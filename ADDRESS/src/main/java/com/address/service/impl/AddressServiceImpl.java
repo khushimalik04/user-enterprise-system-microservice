@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.Objects;
 
 
-
+/**
+ * Persists address records and keeps a user's address set in sync during updates.
+ */
 @Service
 public class AddressServiceImpl implements AddressService {
     Logger log = LoggerFactory.getLogger(AddressServiceImpl.class);
@@ -43,6 +45,7 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public List<AddressDto> saveAddress(AddressRequest addressRequest) {
+        // Validate that the owning user exists before writing dependent records.
         userClient.getSingleUser(addressRequest.getUserId());
         List<Address> listToSave = this.saveOrUpdateAddressRequest(addressRequest);
         List<Address> savedAddress = addressRepository.saveAll(listToSave);
@@ -63,6 +66,7 @@ public class AddressServiceImpl implements AddressService {
         List<Long> upcomingNonNullIds = listToUpdate.stream().map(Address::getId).filter(Objects::nonNull).toList();
         List<Long> existingIds = addressByUserId.stream().map(Address::getId).toList();
 
+        // Any stored address missing from the incoming payload is treated as removed by the client.
         List<Long> idsToDelete = existingIds.stream().filter(id -> !upcomingNonNullIds.contains(id)).toList();
         if(!idsToDelete.isEmpty()){
             addressRepository.deleteAllById(idsToDelete);
@@ -114,6 +118,7 @@ public class AddressServiceImpl implements AddressService {
         List<Address> listToSave = new ArrayList<>();
         for (AddressRequestDto addressRequestDto : addressRequest.getAddressRequestDtoList()) {
             Address address = new Address();
+            // Existing ids update rows; null ids create new address rows for the same user.
             address.setId(addressRequestDto.getId() != null ? addressRequestDto.getId() : null);
             address.setStreet(addressRequestDto.getStreet());
             address.setCity(addressRequestDto.getCity());
@@ -127,4 +132,3 @@ public class AddressServiceImpl implements AddressService {
         return listToSave;
     }
 }
-

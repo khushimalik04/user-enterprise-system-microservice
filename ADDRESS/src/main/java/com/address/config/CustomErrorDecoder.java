@@ -11,11 +11,15 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Normalizes Feign failures from the user service into local exceptions.
+ */
 public class CustomErrorDecoder implements ErrorDecoder {
     @Override
     public Exception decode(String methodKey, Response response) {
         int status = response.status();
         if(status == 503){
+            // Service-unavailable gets a dedicated message because it is a common transient failure here.
             return new BadRequestException("User service is down. Please try again later.", HttpStatus.SERVICE_UNAVAILABLE);
         }
 

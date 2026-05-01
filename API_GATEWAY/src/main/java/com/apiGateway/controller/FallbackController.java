@@ -4,6 +4,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+/**
+ * Simple fallback endpoints used when circuit breakers open for downstream services.
+ */
 @RestController
 public class FallbackController {
     @GetMapping("/userServiceFallback")

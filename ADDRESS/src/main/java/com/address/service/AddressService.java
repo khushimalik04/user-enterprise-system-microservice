@@ -5,6 +5,9 @@ import com.address.model.dto.AddressRequest;
 
 import java.util.List;
 
+/**
+ * Contract for managing address collections that belong to a user.
+ */
 public interface AddressService {
     List<AddressDto> saveAddress(AddressRequest addressRequest);
 

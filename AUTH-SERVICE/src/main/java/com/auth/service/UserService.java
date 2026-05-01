@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 
+/**
+ * Handles auth-user registration and token generation.
+ */
 @Service
 public class UserService {
 
@@ -26,6 +29,7 @@ public class UserService {
     }
 
     public UserDto saveUser(User user){
+        // Passwords are encoded once at registration and never stored in plain text.
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setCreatedAt(LocalDateTime.now());
         User savedUser = userRepository.save(user);
@@ -39,6 +43,7 @@ public class UserService {
         String token = jwtUtil.generateToken(username);
         JwtTokenResponse jwtTokenResponse = new JwtTokenResponse();
         jwtTokenResponse.setToken(token);
+        // The response mirrors standard bearer-token semantics for API clients.
         jwtTokenResponse.setType("Bearer");
         jwtTokenResponse.setValidUntil(jwtUtil.extractExpiration(token).toString());
         return jwtTokenResponse;

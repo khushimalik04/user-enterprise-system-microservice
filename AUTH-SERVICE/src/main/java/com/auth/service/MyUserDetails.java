@@ -8,6 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * Adapts the application's auth user into Spring Security's UserDetails contract.
+ */
 public class MyUserDetails implements UserDetails {
 
     private final User user;
@@ -28,6 +31,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // The current implementation grants a fixed application role to every authenticated user.
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
 

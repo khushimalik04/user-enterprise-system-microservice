@@ -1,5 +1,8 @@
 package com.auth.model;
 
+/**
+ * Response body returned after successful authentication.
+ */
 public class JwtTokenResponse {
 
     private String token;

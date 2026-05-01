@@ -12,6 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+/**
+ * Exposes registration and login endpoints for issuing JWTs.
+ */
 @RestController
 @RequestMapping("/auth")
 public class UserController {
@@ -42,6 +45,7 @@ public class UserController {
             );
 
             if(authentication.isAuthenticated()){
+                // Token generation is delegated so signing stays in one place.
                 return userService.generateToken(loginRequest.getUsername());
             }
 

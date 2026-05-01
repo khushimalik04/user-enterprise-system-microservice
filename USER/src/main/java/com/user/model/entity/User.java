@@ -3,13 +3,15 @@ package com.user.model.entity;
 import com.commonlib.entity.AuditableEntity;
 import jakarta.persistence.*;
 
+/**
+ * Core user record. Audit timestamps are inherited from the shared auditable base class.
+ */
 @Entity
 @Table(name = "users")
-
 public class User extends AuditableEntity {
 
-    @Id  //id becomes primary key
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  //auto generates id
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
     private String userName;

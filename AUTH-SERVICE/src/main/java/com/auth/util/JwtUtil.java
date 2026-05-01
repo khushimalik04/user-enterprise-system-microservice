@@ -13,6 +13,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Creates and parses JWTs issued by the authentication service.
+ */
 @Component
 public class JwtUtil {
 
@@ -24,6 +27,7 @@ public class JwtUtil {
         claims.put("email", "satish@gmail.com");
 
         return Jwts.builder()
+                // The username becomes the subject that downstream validators rely on.
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 5))
@@ -33,6 +37,7 @@ public class JwtUtil {
     }
 
     private Key getKey() {
+        // This service stores the signing secret in a Base64-compatible form before deriving the HMAC key.
         byte[] bytes = Base64.getDecoder().decode(SECRET_KEY);
         return Keys.hmacShaKeyFor(bytes);
     }

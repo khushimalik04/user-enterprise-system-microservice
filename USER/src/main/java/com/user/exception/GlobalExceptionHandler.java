@@ -4,6 +4,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+/**
+ * Reuses the common library's exception-to-response mapping for this service.
+ */
 @RestControllerAdvice
 public class GlobalExceptionHandler extends com.commonlib.exception.GlobalExceptionHandler {
 

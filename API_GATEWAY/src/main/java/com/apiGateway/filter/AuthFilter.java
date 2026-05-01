@@ -9,9 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
-
+/**
+ * Rejects protected gateway requests that do not carry a valid bearer token.
+ */
 @Component
-
 public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> {
 
     @Autowired
@@ -28,6 +29,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
             if(validator.predicate.test(exchange.getRequest())){
+                // Only routes outside the allow-list reach this branch.
                 HttpHeaders headers = exchange.getRequest().getHeaders();
                 String authHeader = headers.getFirst(HttpHeaders.AUTHORIZATION);
 
@@ -40,6 +42,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 
                 }
                 try{
+                    // Validation is enough here because downstream services trust the gateway.
                     jwtUtil.validateToken(token);
                 }catch (Exception e){
                     throw new BadRequestException("Invalid token", HttpStatus.UNAUTHORIZED);

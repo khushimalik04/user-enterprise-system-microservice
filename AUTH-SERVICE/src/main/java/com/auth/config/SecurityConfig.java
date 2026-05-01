@@ -14,6 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * Keeps registration and token creation public while protecting the remaining auth endpoints.
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -28,6 +31,7 @@ public class SecurityConfig {
 
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> {
+                    // These endpoints are the initial entry points for unauthenticated users.
                     req.requestMatchers("/auth/register-user", "/auth/generate-token").permitAll();
                     req.anyRequest().authenticated();
                 }).userDetailsService(userDetailsService())

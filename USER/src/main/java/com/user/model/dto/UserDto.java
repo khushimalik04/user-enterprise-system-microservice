@@ -3,8 +3,11 @@ package com.user.model.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;
-@JsonInclude(JsonInclude.Include.NON_NULL)
 
+/**
+ * API-facing user payload that can optionally include addresses fetched from another service.
+ */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserDto {
     private Long id;
     private String userName;
@@ -59,6 +62,7 @@ public class UserDto {
     }
 
     public void setAddress(List<AddressDto> address) {
+        // Null is allowed so responses can omit addresses when they were not requested or failed to load.
         this.address = address;
     }
 

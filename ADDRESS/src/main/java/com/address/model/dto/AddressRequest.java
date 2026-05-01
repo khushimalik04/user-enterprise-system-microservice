@@ -2,6 +2,9 @@ package com.address.model.dto;
 
 import java.util.List;
 
+/**
+ * Request body for creating or replacing the set of addresses owned by one user.
+ */
 public class AddressRequest {
     private Long userId;
     private List<AddressRequestDto> addressRequestDtoList;

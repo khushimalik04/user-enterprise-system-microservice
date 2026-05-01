@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * CRUD endpoints for addresses attached to a user.
+ */
 @RestController
 @RequestMapping("/addresses")
 public class AddressController {

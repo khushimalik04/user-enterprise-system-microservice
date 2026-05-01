@@ -3,6 +3,9 @@ package com.auth.model;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * Authentication user record used for login credentials and role storage.
+ */
 @Entity
 @Table(name = "auth_users")
 public class User {
@@ -18,10 +21,8 @@ public class User {
     private String password;
     private String roles;
 
-    // ✅ ADDED FIELD
+    // Tracks when the account was created so registration metadata is retained with the credentials.
     private LocalDateTime createdAt;
-
-    // ---------------- GETTERS & SETTERS ----------------
 
     public Long getId() {
         return id;
@@ -79,7 +80,6 @@ public class User {
         this.roles = roles;
     }
 
-    // ✅ NEW GETTER & SETTER
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -87,8 +87,6 @@ public class User {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-
-    // ---------------- CONSTRUCTORS ----------------
 
     public User() {
     }
@@ -104,8 +102,6 @@ public class User {
         this.roles = roles;
         this.createdAt = createdAt;
     }
-
-    // ---------------- TO STRING ----------------
 
     @Override
     public String toString() {

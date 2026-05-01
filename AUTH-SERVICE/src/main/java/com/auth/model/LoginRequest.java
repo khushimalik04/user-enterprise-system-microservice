@@ -1,5 +1,8 @@
 package com.auth.model;
 
+/**
+ * Credentials payload used by the token-generation endpoint.
+ */
 public class LoginRequest {
 
     private String username;
